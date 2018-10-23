@@ -19,5 +19,3 @@ Spring Boot Custom Starter 개발 실습
    06
    07
    08
-   09
-   wrap-up

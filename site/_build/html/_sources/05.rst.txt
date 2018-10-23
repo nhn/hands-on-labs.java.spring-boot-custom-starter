@@ -1,63 +1,98 @@
 ************
-연관관계 설정
+dooray-spring-boot-autoconfigure 개발
 ************
 
 
-OrderItemEntity 클래스에 ItemEntity 로의 연관관계를 추가합니다
+DoorayHookSender.class 가 Classpath에 존재할 때 , DoorayAutoConfiguration 가 동작하도록 설정합니다.
 =============================================================
 
-* `@JoinColumn` : 외래키 맵핑
-* `@ManyToOne` : 연관관계가 다대일 관계(many-to-one)임을 명시
-
+* `@ConditionalOnClass` : 지정한 클래스가 존재하면 java config가 동작한다.
+* /src/main/java/com/nhnent/edu/springboot/starter/DoorayAutoConfiguration.java
 .. code-block:: java
 
-    public class OrderItemEntity {
-        // ...
-
-        // OrderItemEntity-ItemEntity 연관관계 추가
-        @JoinColumn(name = "item_id")
-        @ManyToOne
-        private ItemEntity item;
-
+    @Configuration
+    @ConditionalOnClass(DoorayHookSender.class)
+    @ConditionalOnProperty()
+    @EnableConfigurationProperties(DoorayProperties.class)
+    public class DoorayAutoConfiguration {
     }
 
 
-OrderItemEntity 클래스에 OrderEntity 로의 연관관계를 추가합니다
+dooray.hook-url 속성이 정의되어 있을 때 , DoorayAutoConfiguration 가 동작하도록 설정합니다.
 =============================================================
-
-* `@MapsId` : 외래키와 맵핑한 연관관계를 기본 키에도 맵핑
-
+* `@ConditionalOnProperty` : 지정한 속성이 정의되어 있으면 java config가 동작한다.
+* /src/main/java/com/nhnent/edu/springboot/starter/DoorayAutoConfiguration.java
 .. code-block:: java
 
-    public class OrderItemEntity {
-        // ...
-
-        // OrderItemEntity-OrderEntity 연관관계 추가
-        @JoinColumn(name = "order_id")
-        @ManyToOne(fetch = FetchType.LAZY)
-        @MapsId("orderId")
-        private OrderEntity order;
-
+    @Configuration
+    @ConditionalOnClass(DoorayHookSender.class)
+    @ConditionalOnProperty("dooray.hook-url")
+    @EnableConfigurationProperties(DoorayProperties.class)
+    public class DoorayAutoConfiguration {
     }
 
 
-OrderEntity 클래스에 OrderItemEntity로의 연관관계를 추가합니다
+RestTemplate 타입의 빈이 설정되지 않았을 때, restTemplate 빈을 생성하도록 한다.
+=============================================================
+
+* `@ConditionalOnMissingBean` : 빈이 선언되지 않았으면 java config가 동작한다.
+* /src/main/java/com/nhnent/edu/springboot/starter/DoorayAutoConfiguration.java
+
+.. code-block:: java
+
+    @ConditionalOnMissingBean(RestTemplate.class)
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplateBuilder().build();
+    }
+
+
+DoorayHookSender 빈을 선언한다.
 =========================================================
 
-`OrderItemEntity` 에 `OrderEntity` 로의 연관관계를 이미 설정한 상태에서,
-`OrderEntity` 에도 `OrderItemEntity` 으로의 연관관계를 양방향으로 추가 설정하는 것이기 때문에,
-`@OneToMany` 맵핑 정보의 `mappedBy` 속성을 통해 연관관계의 주인을 지정한다.
-
-* `@OneToMany` : 연관관계가 일대다 관계one-to-(many)임을 명시
+`DoorayHookSender`의 DoorayHookSender(RestTemplate resttemplate, String url) 생성자를 이용하여
+빈을 선언한다. DoorayProperties 를 완성하지 않아서 이번 단계에서는 컴파일 오류가 난다.
+* /src/main/java/com/nhnent/edu/springboot/starter/DoorayAutoConfiguration.java
 
 .. code-block:: java
 
-    public class OrderEntity {
-        // ...
-
-        // OrderEntity-OrderItemEntity 연관관계 추가
-        @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
-        List<OrderItemEntity> orderItems = new ArrayList<>();
-
+    @Bean
+    public DoorayHookSender doorayHookSender(RestTemplate restTemplate) {
+        return new DoorayHookSender(restTemplate, doorayProperties.getHookUrl());
     }
+
+
+dooray.hook-url 속성을 사용할 수 있도록 프로퍼티 클래스를 개발한다.
+=========================================================
+
+hookUrl 프로퍼티를 선언하면 스프링부트의 Relaxed Binding 기능으로 dooray.hook-url 속성을 
+쓸 수 있다.
+* /src/main/java/com/nhnent/edu/springboot/starter/DoorayProperties.java
+
+.. code-block:: java
+
+    @ConfigurationProperties(prefix = "dooray")
+    public class DoorayProperties {
+        private String hookUrl;
+
+        public String getHookUrl() {
+            return hookUrl;
+        }
+
+        public void setHookUrl(String hookUrl) {
+            this.hookUrl = hookUrl;
+        }
+    }
+
+
+스프링부트 애플리케이션이 로딩할 JavaConfiguration 을 지정해 준다.
+=========================================================
+
+* /src/main/resources/META-INF/spring.factories 
+
+.. code-block:: java
+
+    org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+        com.nhnent.edu.springboot.starter.DoorayAutoConfiguration
+
 

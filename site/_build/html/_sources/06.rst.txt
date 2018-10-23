@@ -1,5 +1,5 @@
 **********************
-Repository 생성
+dooray-spring-boot-starter 개발
 **********************
 
 * Spring Data Repository interface는 data access layer 구현을 위해 반복적으로 작성했던 유사한 코드를 줄이기 위한 추상화를 제공합니다

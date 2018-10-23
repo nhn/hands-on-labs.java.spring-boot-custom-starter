@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5. 연관관계 설정 &mdash; Spring Boot Custom Starter 개발 실습 1.0 documentation</title>
+  <title>5. dooray-spring-boot-autoconfigure 개발 &mdash; Spring Boot Custom Starter 개발 실습 1.0 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="색인" href="genindex.html" />
     <link rel="search" title="검색" href="search.html" />
-    <link rel="next" title="6. Repository 생성" href="06.html" />
+    <link rel="next" title="6. dooray-spring-boot-starter 개발" href="06.html" />
     <link rel="prev" title="4. Project의 구조" href="04.html" /> 
 
   
@@ -80,17 +80,18 @@
 <li class="toctree-l1"><a class="reference internal" href="02.html">2. Dooray! 메신저 Hook Url 얻기</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03.html">3. 실습용 Project 다운로드</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04.html">4. Project의 구조</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">5. 연관관계 설정</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#orderitementity-itementity">5.1. OrderItemEntity 클래스에 ItemEntity 로의 연관관계를 추가합니다</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#orderitementity-orderentity">5.2. OrderItemEntity 클래스에 OrderEntity 로의 연관관계를 추가합니다</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#orderentity-orderitementity">5.3. OrderEntity 클래스에 OrderItemEntity로의 연관관계를 추가합니다</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. dooray-spring-boot-autoconfigure 개발</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#doorayhooksender-class-classpath-doorayautoconfiguration">5.1. DoorayHookSender.class 가 Classpath에 존재할 때 , DoorayAutoConfiguration 가 동작하도록 설정합니다.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dooray-hook-url-doorayautoconfiguration">5.2. dooray.hook-url 속성이 정의되어 있을 때 , DoorayAutoConfiguration 가 동작하도록 설정합니다.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#resttemplate-resttemplate">5.3. RestTemplate 타입의 빈이 설정되지 않았을 때, restTemplate 빈을 생성하도록 한다.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#doorayhooksender">5.4. DoorayHookSender 빈을 선언한다.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dooray-hook-url">5.5. dooray.hook-url 속성을 사용할 수 있도록 프로퍼티 클래스를 개발한다.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#javaconfiguration">5.6. 스프링부트 애플리케이션이 로딩할 JavaConfiguration 을 지정해 준다.</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="06.html">6. Repository 생성</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07.html">7. 어플리케이션에서의 사용</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08.html">8. Pagination 구현 수정</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09.html">9. 불필요한 mybatis 관련 파일 삭제</a></li>
-<li class="toctree-l1"><a class="reference internal" href="wrap-up.html">10. 정리</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">6. dooray-spring-boot-starter 개발</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">7. dooray-spring-boot-starter-application 에서의 사용</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">8. 정리</a></li>
 </ul>
 
             
@@ -136,7 +137,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>5. 연관관계 설정</li>
+      <li>5. dooray-spring-boot-autoconfigure 개발</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -153,60 +154,91 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="id1">
-<h1>5. 연관관계 설정<a class="headerlink" href="#id1" title="제목 주소">¶</a></h1>
-<div class="section" id="orderitementity-itementity">
-<h2>5.1. OrderItemEntity 클래스에 ItemEntity 로의 연관관계를 추가합니다<a class="headerlink" href="#orderitementity-itementity" title="제목 주소">¶</a></h2>
+  <div class="section" id="dooray-spring-boot-autoconfigure">
+<h1>5. dooray-spring-boot-autoconfigure 개발<a class="headerlink" href="#dooray-spring-boot-autoconfigure" title="제목 주소">¶</a></h1>
+<div class="section" id="doorayhooksender-class-classpath-doorayautoconfiguration">
+<h2>5.1. DoorayHookSender.class 가 Classpath에 존재할 때 , DoorayAutoConfiguration 가 동작하도록 설정합니다.<a class="headerlink" href="#doorayhooksender-class-classpath-doorayautoconfiguration" title="제목 주소">¶</a></h2>
 <ul class="simple">
-<li><cite>&#64;JoinColumn</cite> : 외래키 맵핑</li>
-<li><cite>&#64;ManyToOne</cite> : 연관관계가 다대일 관계(many-to-one)임을 명시</li>
+<li><cite>&#64;ConditionalOnClass</cite> : 지정한 클래스가 존재하면 java config가 동작한다.</li>
+<li>/src/main/java/com/nhnent/edu/springboot/starter/DoorayAutoConfiguration.java</li>
 </ul>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderItemEntity</span> <span class="o">{</span>
-    <span class="c1">// ...</span>
-
-    <span class="c1">// OrderItemEntity-ItemEntity 연관관계 추가</span>
-    <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;item_id&quot;</span><span class="o">)</span>
-    <span class="nd">@ManyToOne</span>
-    <span class="kd">private</span> <span class="n">ItemEntity</span> <span class="n">item</span><span class="o">;</span>
-
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="nd">@ConditionalOnClass</span><span class="o">(</span><span class="n">DoorayHookSender</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@ConditionalOnProperty</span><span class="o">()</span>
+<span class="nd">@EnableConfigurationProperties</span><span class="o">(</span><span class="n">DoorayProperties</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoorayAutoConfiguration</span> <span class="o">{</span>
 <span class="o">}</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="orderitementity-orderentity">
-<h2>5.2. OrderItemEntity 클래스에 OrderEntity 로의 연관관계를 추가합니다<a class="headerlink" href="#orderitementity-orderentity" title="제목 주소">¶</a></h2>
+<div class="section" id="dooray-hook-url-doorayautoconfiguration">
+<h2>5.2. dooray.hook-url 속성이 정의되어 있을 때 , DoorayAutoConfiguration 가 동작하도록 설정합니다.<a class="headerlink" href="#dooray-hook-url-doorayautoconfiguration" title="제목 주소">¶</a></h2>
 <ul class="simple">
-<li><cite>&#64;MapsId</cite> : 외래키와 맵핑한 연관관계를 기본 키에도 맵핑</li>
+<li><cite>&#64;ConditionalOnProperty</cite> : 지정한 속성이 정의되어 있으면 java config가 동작한다.</li>
+<li>/src/main/java/com/nhnent/edu/springboot/starter/DoorayAutoConfiguration.java</li>
 </ul>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderItemEntity</span> <span class="o">{</span>
-    <span class="c1">// ...</span>
-
-    <span class="c1">// OrderItemEntity-OrderEntity 연관관계 추가</span>
-    <span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;order_id&quot;</span><span class="o">)</span>
-    <span class="nd">@ManyToOne</span><span class="o">(</span><span class="n">fetch</span> <span class="o">=</span> <span class="n">FetchType</span><span class="o">.</span><span class="na">LAZY</span><span class="o">)</span>
-    <span class="nd">@MapsId</span><span class="o">(</span><span class="s">&quot;orderId&quot;</span><span class="o">)</span>
-    <span class="kd">private</span> <span class="n">OrderEntity</span> <span class="n">order</span><span class="o">;</span>
-
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Configuration</span>
+<span class="nd">@ConditionalOnClass</span><span class="o">(</span><span class="n">DoorayHookSender</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@ConditionalOnProperty</span><span class="o">(</span><span class="s">&quot;dooray.hook-url&quot;</span><span class="o">)</span>
+<span class="nd">@EnableConfigurationProperties</span><span class="o">(</span><span class="n">DoorayProperties</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoorayAutoConfiguration</span> <span class="o">{</span>
 <span class="o">}</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="orderentity-orderitementity">
-<h2>5.3. OrderEntity 클래스에 OrderItemEntity로의 연관관계를 추가합니다<a class="headerlink" href="#orderentity-orderitementity" title="제목 주소">¶</a></h2>
-<p><cite>OrderItemEntity</cite> 에 <cite>OrderEntity</cite> 로의 연관관계를 이미 설정한 상태에서,
-<cite>OrderEntity</cite> 에도 <cite>OrderItemEntity</cite> 으로의 연관관계를 양방향으로 추가 설정하는 것이기 때문에,
-<cite>&#64;OneToMany</cite> 맵핑 정보의 <cite>mappedBy</cite> 속성을 통해 연관관계의 주인을 지정한다.</p>
+<div class="section" id="resttemplate-resttemplate">
+<h2>5.3. RestTemplate 타입의 빈이 설정되지 않았을 때, restTemplate 빈을 생성하도록 한다.<a class="headerlink" href="#resttemplate-resttemplate" title="제목 주소">¶</a></h2>
 <ul class="simple">
-<li><cite>&#64;OneToMany</cite> : 연관관계가 일대다 관계one-to-(many)임을 명시</li>
+<li><cite>&#64;ConditionalOnMissingBean</cite> : 빈이 선언되지 않았으면 java config가 동작한다.</li>
+<li>/src/main/java/com/nhnent/edu/springboot/starter/DoorayAutoConfiguration.java</li>
 </ul>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderEntity</span> <span class="o">{</span>
-    <span class="c1">// ...</span>
-
-    <span class="c1">// OrderEntity-OrderItemEntity 연관관계 추가</span>
-    <span class="nd">@OneToMany</span><span class="o">(</span><span class="n">mappedBy</span> <span class="o">=</span> <span class="s">&quot;order&quot;</span><span class="o">,</span> <span class="n">fetch</span> <span class="o">=</span> <span class="n">FetchType</span><span class="o">.</span><span class="na">EAGER</span><span class="o">,</span> <span class="n">cascade</span> <span class="o">=</span> <span class="o">{</span> <span class="n">CascadeType</span><span class="o">.</span><span class="na">PERSIST</span><span class="o">,</span> <span class="n">CascadeType</span><span class="o">.</span><span class="na">REMOVE</span> <span class="o">})</span>
-    <span class="n">List</span><span class="o">&lt;</span><span class="n">OrderItemEntity</span><span class="o">&gt;</span> <span class="n">orderItems</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
-
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@ConditionalOnMissingBean</span><span class="o">(</span><span class="n">RestTemplate</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">RestTemplate</span> <span class="nf">restTemplate</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">RestTemplateBuilder</span><span class="o">().</span><span class="na">build</span><span class="o">();</span>
 <span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="doorayhooksender">
+<h2>5.4. DoorayHookSender 빈을 선언한다.<a class="headerlink" href="#doorayhooksender" title="제목 주소">¶</a></h2>
+<p><a href="#id1"><span class="problematic" id="id2">`</span></a>DoorayHookSender`의 DoorayHookSender(RestTemplate resttemplate, String url) 생성자를 이용하여
+빈을 선언한다. DoorayProperties 를 완성하지 않아서 이번 단계에서는 컴파일 오류가 난다.
+* /src/main/java/com/nhnent/edu/springboot/starter/DoorayAutoConfiguration.java</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Bean</span>
+<span class="kd">public</span> <span class="n">DoorayHookSender</span> <span class="nf">doorayHookSender</span><span class="o">(</span><span class="n">RestTemplate</span> <span class="n">restTemplate</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">DoorayHookSender</span><span class="o">(</span><span class="n">restTemplate</span><span class="o">,</span> <span class="n">doorayProperties</span><span class="o">.</span><span class="na">getHookUrl</span><span class="o">());</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dooray-hook-url">
+<h2>5.5. dooray.hook-url 속성을 사용할 수 있도록 프로퍼티 클래스를 개발한다.<a class="headerlink" href="#dooray-hook-url" title="제목 주소">¶</a></h2>
+<p>hookUrl 프로퍼티를 선언하면 스프링부트의 Relaxed Binding 기능으로 dooray.hook-url 속성을
+쓸 수 있다.
+* /src/main/java/com/nhnent/edu/springboot/starter/DoorayProperties.java</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;dooray&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoorayProperties</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">hookUrl</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getHookUrl</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">hookUrl</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setHookUrl</span><span class="o">(</span><span class="n">String</span> <span class="n">hookUrl</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">hookUrl</span> <span class="o">=</span> <span class="n">hookUrl</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="javaconfiguration">
+<h2>5.6. 스프링부트 애플리케이션이 로딩할 JavaConfiguration 을 지정해 준다.<a class="headerlink" href="#javaconfiguration" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>/src/main/resources/META-INF/spring.factories</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.nhnent.edu.springboot.starter.DoorayAutoConfiguration
 </pre></div>
 </div>
 </div>
@@ -220,7 +252,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="06.html" class="btn btn-neutral float-right" title="6. Repository 생성" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="06.html" class="btn btn-neutral float-right" title="6. dooray-spring-boot-starter 개발" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="04.html" class="btn btn-neutral" title="4. Project의 구조" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

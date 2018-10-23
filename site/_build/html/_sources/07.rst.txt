@@ -1,5 +1,5 @@
 **********************
-어플리케이션에서의 사용
+dooray-spring-boot-starter-application 에서의 사용 
 **********************
 
 ItemEntity 클래스에 DTO로의 변환 메쏘드를 추가합니다

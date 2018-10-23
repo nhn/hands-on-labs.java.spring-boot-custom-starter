@@ -1,5 +1,5 @@
 **********************
-Pagination 구현 수정
+정리
 **********************
 
 JPA 설정에 `@EnableSpringDataWebSupport` 를 추가합니다
