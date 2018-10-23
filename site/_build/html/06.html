@@ -82,8 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="04.html">4. Project의 구조</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05.html">5. dooray-spring-boot-autoconfigure 개발</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">6. dooray-spring-boot-starter 개발</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#itemrepository">6.1. ItemRepository 인터페이스를 생성합니다</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#orderrepository">6.2. OrderRepository 인터페이스를 생성합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dooray-spring-boot-autoconfigure">6.1. dooray-spring-boot-autoconfigure 를 의존성에 추가합니다.</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="07.html">7. dooray-spring-boot-starter-application 에서의 사용</a></li>
@@ -153,31 +152,46 @@
   <div class="section" id="dooray-spring-boot-starter">
 <h1>6. dooray-spring-boot-starter 개발<a class="headerlink" href="#dooray-spring-boot-starter" title="제목 주소">¶</a></h1>
 <ul class="simple">
-<li>Spring Data Repository interface는 data access layer 구현을 위해 반복적으로 작성했던 유사한 코드를 줄이기 위한 추상화를 제공합니다</li>
-<li><dl class="first docutils">
-<dt>Spring Data JPA에서 제공하는 <a href="#id1"><span class="problematic" id="id2">`</span></a>JpaRepository`를 상속받으면 웬만한 CRUD, Pagination, Sorting 관련 메쏘드를 제공받을 수 있습니다</dt>
-<dd><ul class="first last">
-<li>cf.) <a class="reference external" href="https://docs.spring.io/spring-data/data-jpa/docs/1.11.14.RELEASE/api/org/springframework/data/jpa/repository/JpaRepository.html">https://docs.spring.io/spring-data/data-jpa/docs/1.11.14.RELEASE/api/org/springframework/data/jpa/repository/JpaRepository.html</a></li>
+<li>dooray-spring-boot-starter를 사용할 애플리케이션에 의존성을 제공해 주는 역할만 합니다.</li>
 </ul>
-</dd>
-</dl>
-</li>
+<div class="section" id="dooray-spring-boot-autoconfigure">
+<h2>6.1. dooray-spring-boot-autoconfigure 를 의존성에 추가합니다.<a class="headerlink" href="#dooray-spring-boot-autoconfigure" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>dooray-spring-boot-starter/pom.xml</li>
 </ul>
-<div class="section" id="itemrepository">
-<h2>6.1. ItemRepository 인터페이스를 생성합니다<a class="headerlink" href="#itemrepository" title="제목 주소">¶</a></h2>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">com.nhnent.forward.mybatistojpa.repository</span><span class="o">;</span>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+        <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+        <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
 
-<span class="kn">import</span> <span class="nn">org.springframework.data.jpa.repository.JpaRepository</span><span class="o">;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.nhnent.edu.springboot.starter<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>dooray-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
 
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ItemRepository</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">ItemEntity</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="o">{</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="orderrepository">
-<h2>6.2. OrderRepository 인터페이스를 생성합니다<a class="headerlink" href="#orderrepository" title="제목 주소">¶</a></h2>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">OrderRepository</span> <span class="kd">extends</span> <span class="n">JpaRepository</span><span class="o">&lt;</span><span class="n">OrderEntity</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="o">{</span>
-<span class="o">}</span>
+    <span class="nt">&lt;properties&gt;</span>
+        <span class="nt">&lt;java.version&gt;</span>1.8<span class="nt">&lt;/java.version&gt;</span>
+    <span class="nt">&lt;/properties&gt;</span>
+
+    <span class="nt">&lt;dependencies&gt;</span>
+        <span class="c">&lt;!-- TODO (6) dooray-spring-boot-autoconfigure:1.0.1-SNAPSHOT dependency 를 추가한다. --&gt;</span>
+        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>com.nhnent.springboot<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>dooray-spring-boot-autoconfigure<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>1.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span>
+    <span class="nt">&lt;/dependencies&gt;</span>
+
+    <span class="nt">&lt;build&gt;</span>
+        <span class="nt">&lt;plugins&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;/plugins&gt;</span>
+    <span class="nt">&lt;/build&gt;</span>
+
+<span class="nt">&lt;/project&gt;</span>
 </pre></div>
 </div>
 </div>

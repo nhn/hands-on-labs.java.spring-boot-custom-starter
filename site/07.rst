@@ -2,25 +2,36 @@
 dooray-spring-boot-starter-application 에서의 사용 
 **********************
 
-ItemEntity 클래스에 DTO로의 변환 메쏘드를 추가합니다
+* 애플리케이션에서는 `dooray-spring-boot-starter` 를 의존성에 추가하고 dooray.hook-url 속성만 제공하면 DoorayHookSender 빈이 자동으로 설정되어 진다.
+
+
+dooray-spring-boot-starter 의존성 추가
 ==================================================================
 
-* ItemService 메쏘드들의 반환값을 기존과 동일하게 Item DTO로 맞추기 위해 ItemEntity 클래스에 Item DTO로의 변환 메쏘드를 추가합니다
+* 애플리케이션이 `dooray-spring-boot-starter`의 기능을 사용할 수 있도록 의존성을 추가합니다.
+* /dooray-spring-boot-starter-application/pom.xml
 
-.. code-block:: java
+.. code-block:: xml
 
-    public class ItemEntity {
-        // ...
+     <dependencies>
+        <dependency>
+            <groupId>com.nhnent.springboot</groupId>
+            <artifactId>dooray-spring-boot-starter</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
-        public Item toItemDto() {
-            Item itemDto = new Item();
-            itemDto.setItemId(this.itemId);
-            itemDto.setItemName(this.itemName);
-            itemDto.setPrice(this.price);
 
-            return itemDto;
-        }
-    }
+
+dooray.hook-url 설정
+==================================================================
+
+* dooray.hook-url 속성으로  2장에서 복사해둔 url 을 설정합니다.
+* /dooray-spring-boot-starter-application/src/main/resources/application.properties
+
+.. code-block:: property
+
+    dooray.hook-url=https://xxxxx..... 
 
 
 ItemService에서 ItemMapper 대신 ItemRepository를 참조하도록 수정합니다

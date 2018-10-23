@@ -2,27 +2,46 @@
 dooray-spring-boot-starter 개발
 **********************
 
-* Spring Data Repository interface는 data access layer 구현을 위해 반복적으로 작성했던 유사한 코드를 줄이기 위한 추상화를 제공합니다
-* Spring Data JPA에서 제공하는 `JpaRepository`를 상속받으면 웬만한 CRUD, Pagination, Sorting 관련 메쏘드를 제공받을 수 있습니다
-    * cf.) https://docs.spring.io/spring-data/data-jpa/docs/1.11.14.RELEASE/api/org/springframework/data/jpa/repository/JpaRepository.html
+* dooray-spring-boot-starter를 사용할 애플리케이션에 의존성을 제공해 주는 역할만 합니다.
 
-ItemRepository 인터페이스를 생성합니다
+dooray-spring-boot-autoconfigure 를 의존성에 추가합니다.
 ===================================
 
-.. code-block:: java
+* dooray-spring-boot-starter/pom.xml
 
-    package com.nhnent.forward.mybatistojpa.repository;
+.. code-block:: xml
 
-    import org.springframework.data.jpa.repository.JpaRepository;
+    <?xml version="1.0" encoding="UTF-8"?>
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
 
-    public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
-    }
+        <groupId>com.nhnent.edu.springboot.starter</groupId>
+        <artifactId>dooray-spring-boot-starter</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
 
+        <properties>
+            <java.version>1.8</java.version>
+        </properties>
 
-OrderRepository 인터페이스를 생성합니다
-=====================================
+        <dependencies>
+            <!-- TODO (6) dooray-spring-boot-autoconfigure:1.0.1-SNAPSHOT dependency 를 추가한다. -->
+            <dependency>
+                <groupId>com.nhnent.springboot</groupId>
+                <artifactId>dooray-spring-boot-autoconfigure</artifactId>
+                <version>1.0.1-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
 
-.. code-block:: java
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </build>
 
-    public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
-    }
+    </project>
+
