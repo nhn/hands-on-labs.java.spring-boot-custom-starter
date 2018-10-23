@@ -1,0 +1,21 @@
+*********
+실습용 Project 다운로드
+*********
+
+실습용 Project  Clone 
+=================================================
+
+* GIT 을 이용하여 실습용 프로젝트를 Clone 합니다. 
+
+.. code-block:: bash
+
+    git clone https://github.nhnent.com/jibum-jung/hands-on-labs.java.spring-boot-custom-starter.git 
+
+
+IDE 임포트
+===================================
+
+* Intellij
+
+* Eclipse
+

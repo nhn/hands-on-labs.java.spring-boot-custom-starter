@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>7. 어플리케이션에서의 사용 &mdash; Spring Boot Custom Starter 개발 실습 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="8. Pagination 구현 수정" href="08.html" />
+    <link rel="prev" title="6. Repository 생성" href="06.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Spring Boot Custom Starter 개발 실습
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">1. 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">2. Dooray! 메신저 Hook Url 얻기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">3. 실습용 Project 다운로드</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">4. Project의 구조</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">5. 연관관계 설정</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">6. Repository 생성</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. 어플리케이션에서의 사용</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#itementity-dto">7.1. ItemEntity 클래스에 DTO로의 변환 메쏘드를 추가합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itemservice-itemmapper-itemrepository">7.2. ItemService에서 ItemMapper 대신 ItemRepository를 참조하도록 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itemservice-getitem">7.3. ItemService의 <cite>getItem()</cite> 메쏘드를 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itemservice-createitem">7.4. ItemService의 <cite>createItem()</cite> 메쏘드를 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itemservice-updateitem">7.5. ItemService의 <cite>updateItem()</cite> 메쏘드를 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itemservice-deleteitem">7.6. ItemService의 <cite>deleteItem()</cite> 메쏘드를 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderitementity-dto">7.7. OrderItemEntity 클래스에 DTO로의 변환 메쏘드를 추가합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderentity-dto">7.8. OrderEntity 클래스에 DTO로의 변환 메쏘드를 추가합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderservice-ordermapper-orderitemmapper-orderrepository">7.9. OrderService에서 OrderMapper와 OrderItemMapper 대신 OrderRepository를 참조하도록 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderservice-getorder">7.10. OrderService의 <cite>getOrder()</cite> 메쏘드를 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderservice-createorder">7.11. OrderService의 <cite>createOrder()</cite> 메쏘드를 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderservice-deleteorder">7.12. OrderService의 <cite>deleteOrder()</cite> 메쏘드를 수정합니다</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.html">8. Pagination 구현 수정</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">9. 불필요한 mybatis 관련 파일 삭제</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrap-up.html">10. 정리</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Spring Boot Custom Starter 개발 실습</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>7. 어플리케이션에서의 사용</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>7. 어플리케이션에서의 사용<a class="headerlink" href="#id1" title="제목 주소">¶</a></h1>
+<div class="section" id="itementity-dto">
+<h2>7.1. ItemEntity 클래스에 DTO로의 변환 메쏘드를 추가합니다<a class="headerlink" href="#itementity-dto" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>ItemService 메쏘드들의 반환값을 기존과 동일하게 Item DTO로 맞추기 위해 ItemEntity 클래스에 Item DTO로의 변환 메쏘드를 추가합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemEntity</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="kd">public</span> <span class="n">Item</span> <span class="nf">toItemDto</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Item</span> <span class="n">itemDto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Item</span><span class="o">();</span>
+        <span class="n">itemDto</span><span class="o">.</span><span class="na">setItemId</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">itemId</span><span class="o">);</span>
+        <span class="n">itemDto</span><span class="o">.</span><span class="na">setItemName</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">itemName</span><span class="o">);</span>
+        <span class="n">itemDto</span><span class="o">.</span><span class="na">setPrice</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">price</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">itemDto</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="itemservice-itemmapper-itemrepository">
+<h2>7.2. ItemService에서 ItemMapper 대신 ItemRepository를 참조하도록 수정합니다<a class="headerlink" href="#itemservice-itemmapper-itemrepository" title="제목 주소">¶</a></h2>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemService</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">ItemRepository</span> <span class="n">itemRepository</span><span class="o">;</span>
+
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="itemservice-getitem">
+<h2>7.3. ItemService의 <cite>getItem()</cite> 메쏘드를 수정합니다<a class="headerlink" href="#itemservice-getitem" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li><cite>itemMapper.getItem()</cite> 대신 <cite>itemRepository.findOne()</cite> 메쏘드를 사용하도록 수정합니다</li>
+<li><cite>itemRepository.findOne()</cite> 메쏘드가 ItemEntity를 반환하므로 <cite>toItemDto()</cite> 메쏘드를 호출하여 DTO로 변환해서 반환하도록 합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Item</span> <span class="nf">getItem</span><span class="o">(</span><span class="n">Long</span> <span class="n">itemId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">itemRepository</span><span class="o">.</span><span class="na">findOne</span><span class="o">(</span><span class="n">itemId</span><span class="o">).</span><span class="na">toItemDto</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="itemservice-createitem">
+<h2>7.4. ItemService의 <cite>createItem()</cite> 메쏘드를 수정합니다<a class="headerlink" href="#itemservice-createitem" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li><cite>itemMapper.insertItem()</cite> 메쏘드 호출 대신에, ItemEntity 클래스의 객체를 생성한 후 <cite>itemRepository.save()</cite> 메쏘드를 호출합니다</li>
+<li><cite>itemRepository.save()</cite> 메쏘드가 ItemEntity를 반환하므로 <cite>toItemDto()</cite> 메쏘드를 호출하여 DTO로 변환해서 반환하도록 합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Item</span> <span class="nf">createItem</span><span class="o">(</span><span class="n">Item</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ItemEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ItemEntity</span><span class="o">();</span>
+        <span class="n">entity</span><span class="o">.</span><span class="na">setItemName</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getItemName</span><span class="o">());</span>
+        <span class="n">entity</span><span class="o">.</span><span class="na">setPrice</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getPrice</span><span class="o">());</span>
+
+        <span class="k">return</span> <span class="n">itemRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">entity</span><span class="o">).</span><span class="na">toItemDto</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="itemservice-updateitem">
+<h2>7.5. ItemService의 <cite>updateItem()</cite> 메쏘드를 수정합니다<a class="headerlink" href="#itemservice-updateitem" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li><cite>itemMapper.updateItem()</cite> 메쏘드 호출 대신에, ItemEntity 클래스의 객체를 변경한 후 <cite>itemRepository.save()</cite> 메쏘드를 호출합니다</li>
+<li><cite>itemRepository.save()</cite> 메쏘드가 ItemEntity를 반환하므로 <cite>toItemDto()</cite> 메쏘드를 호출하여 DTO로 변환해서 반환하도록 합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Item</span> <span class="nf">updateItem</span><span class="o">(</span><span class="n">Item</span> <span class="n">item</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ItemEntity</span> <span class="n">itemEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ItemEntity</span><span class="o">();</span>
+        <span class="n">itemEntity</span><span class="o">.</span><span class="na">setItemId</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getItemId</span><span class="o">());</span>
+        <span class="n">itemEntity</span><span class="o">.</span><span class="na">setItemName</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getItemName</span><span class="o">());</span>
+        <span class="n">itemEntity</span><span class="o">.</span><span class="na">setPrice</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">getPrice</span><span class="o">());</span>
+
+        <span class="k">return</span> <span class="n">itemRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">itemEntity</span><span class="o">).</span><span class="na">toItemDto</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="itemservice-deleteitem">
+<h2>7.6. ItemService의 <cite>deleteItem()</cite> 메쏘드를 수정합니다<a class="headerlink" href="#itemservice-deleteitem" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li><cite>itemMapper.deleteItem()</cite> 메쏘드 호출 대신 <cite>itemRepository.delete()</cite> 메쏘드를 사용하도록 수정합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">deleteItem</span><span class="o">(</span><span class="n">Long</span> <span class="n">itemId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">itemRepository</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">itemId</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderitementity-dto">
+<h2>7.7. OrderItemEntity 클래스에 DTO로의 변환 메쏘드를 추가합니다<a class="headerlink" href="#orderitementity-dto" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>OrderItemEntity 클래스에 OrderItem DTO로의 변환 메쏘드를 추가합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderItemEntity</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="kd">public</span> <span class="n">OrderItem</span> <span class="nf">toOrderItemDto</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">OrderItem</span> <span class="n">orderItemDto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OrderItem</span><span class="o">();</span>
+        <span class="n">orderItemDto</span><span class="o">.</span><span class="na">setOrderId</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">pk</span><span class="o">.</span><span class="na">getOrderId</span><span class="o">());</span>
+        <span class="n">orderItemDto</span><span class="o">.</span><span class="na">setLineNumber</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">pk</span><span class="o">.</span><span class="na">getLineNumber</span><span class="o">());</span>
+        <span class="n">orderItemDto</span><span class="o">.</span><span class="na">setQuantity</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">quantity</span><span class="o">);</span>
+        <span class="n">orderItemDto</span><span class="o">.</span><span class="na">setItem</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">item</span><span class="o">.</span><span class="na">toItemDto</span><span class="o">());</span>
+
+        <span class="k">return</span> <span class="n">orderItemDto</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderentity-dto">
+<h2>7.8. OrderEntity 클래스에 DTO로의 변환 메쏘드를 추가합니다<a class="headerlink" href="#orderentity-dto" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>OrderService 메쏘드들의 반환값을 기존과 동일하게 Order DTO로 맞추기 위해 OrderEntity 클래스에 Order DTO로의 변환 메쏘드를 추가합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderEntity</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="kd">public</span> <span class="n">Order</span> <span class="nf">toOrderDto</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Order</span> <span class="n">orderDto</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Order</span><span class="o">();</span>
+        <span class="n">orderDto</span><span class="o">.</span><span class="na">setOrderId</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">orderId</span><span class="o">);</span>
+        <span class="n">orderDto</span><span class="o">.</span><span class="na">setOrderDate</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">orderDate</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">orderItems</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">orderDto</span><span class="o">.</span><span class="na">setOrderItems</span><span class="o">(</span>
+                    <span class="k">this</span><span class="o">.</span><span class="na">orderItems</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+                                   <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">OrderItemEntity</span><span class="o">::</span><span class="n">toOrderItemDto</span><span class="o">)</span>
+                                   <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">())</span>
+                                  <span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">orderDto</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderservice-ordermapper-orderitemmapper-orderrepository">
+<h2>7.9. OrderService에서 OrderMapper와 OrderItemMapper 대신 OrderRepository를 참조하도록 수정합니다<a class="headerlink" href="#orderservice-ordermapper-orderitemmapper-orderrepository" title="제목 주소">¶</a></h2>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderService</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">OrderRepository</span> <span class="n">orderRepository</span><span class="o">;</span>
+
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderservice-getorder">
+<h2>7.10. OrderService의 <cite>getOrder()</cite> 메쏘드를 수정합니다<a class="headerlink" href="#orderservice-getorder" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li><cite>orderMapper.getOrder()</cite> 대신 <cite>orderRepository.findOne()</cite> 메쏘드를 사용하도록 수정합니다</li>
+<li><cite>orderRepository.findOne()</cite> 메쏘드가 OrderEntity를 반환하므로 <cite>toOrderDto()</cite> 메쏘드를 호출하여 DTO로 변환해서 반환하도록 합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Order</span> <span class="nf">getOrder</span><span class="o">(</span><span class="n">Long</span> <span class="n">orderId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">orderRepository</span><span class="o">.</span><span class="na">findOne</span><span class="o">(</span><span class="n">orderId</span><span class="o">).</span><span class="na">toOrderDto</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderservice-createorder">
+<h2>7.11. OrderService의 <cite>createOrder()</cite> 메쏘드를 수정합니다<a class="headerlink" href="#orderservice-createorder" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li><cite>orderMapper.insertOrder()</cite>, <cite>orderItemMapper.insertOrderItem()</cite> 메쏘드를 호출하는 대신에 <cite>orderRepository.save()</cite> 메쏘드를 호출합니다</li>
+<li>OrderEntity, OrderItemEntity, ItemEntity 클래스의 각 객체들을 생성하고 엔터티 클래스 간의 연관관계를 이용해서 값을 설정합니다</li>
+<li><cite>orderRepository.save()</cite> 메쏘드가 OrderEntity를 반환하므로 <cite>toOrderDto()</cite> 메쏘드를 호출하여 DTO로 변환해서 반환하도록 합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Order</span> <span class="nf">createOrder</span><span class="o">(</span><span class="n">Order</span> <span class="n">order</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">OrderEntity</span> <span class="n">orderEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OrderEntity</span><span class="o">();</span>
+        <span class="n">orderEntity</span><span class="o">.</span><span class="na">setOrderDate</span><span class="o">(</span><span class="k">new</span> <span class="n">Date</span><span class="o">());</span>
+
+        <span class="n">order</span><span class="o">.</span><span class="na">getOrderItems</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">orderItem</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                    <span class="n">ItemEntity</span> <span class="n">itemEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ItemEntity</span><span class="o">();</span>
+                    <span class="n">itemEntity</span><span class="o">.</span><span class="na">setItemId</span><span class="o">(</span><span class="n">orderItem</span><span class="o">.</span><span class="na">getItem</span><span class="o">().</span><span class="na">getItemId</span><span class="o">());</span>
+
+                    <span class="n">OrderItemEntity</span> <span class="n">orderItemEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OrderItemEntity</span><span class="o">();</span>
+                    <span class="n">orderItemEntity</span><span class="o">.</span><span class="na">setOrder</span><span class="o">(</span><span class="n">orderEntity</span><span class="o">);</span>
+                    <span class="n">orderItemEntity</span><span class="o">.</span><span class="na">getPk</span><span class="o">().</span><span class="na">setLineNumber</span><span class="o">(</span><span class="n">orderItem</span><span class="o">.</span><span class="na">getLineNumber</span><span class="o">());</span>
+                    <span class="n">orderItemEntity</span><span class="o">.</span><span class="na">setItem</span><span class="o">(</span><span class="n">itemEntity</span><span class="o">);</span>
+                    <span class="n">orderItemEntity</span><span class="o">.</span><span class="na">setQuantity</span><span class="o">(</span><span class="n">orderItem</span><span class="o">.</span><span class="na">getQuantity</span><span class="o">());</span>
+
+                    <span class="n">orderEntity</span><span class="o">.</span><span class="na">getOrderItems</span><span class="o">().</span><span class="na">add</span><span class="o">(</span><span class="n">orderItemEntity</span><span class="o">);</span>
+                <span class="o">});</span>
+
+        <span class="k">return</span> <span class="n">orderRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">orderEntity</span><span class="o">).</span><span class="na">toOrderDto</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderservice-deleteorder">
+<h2>7.12. OrderService의 <cite>deleteOrder()</cite> 메쏘드를 수정합니다<a class="headerlink" href="#orderservice-deleteorder" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li><cite>orderMapper.deleteOrder()</cite> 메쏘드 호출 대신 <cite>orderRepository.delete()</cite> 메쏘드를 사용하도록 수정합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">deleteOrder</span><span class="o">(</span><span class="n">Long</span> <span class="n">orderId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">orderRepository</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">orderId</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="08.html" class="btn btn-neutral float-right" title="8. Pagination 구현 수정" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="06.html" class="btn btn-neutral" title="6. Repository 생성" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright NHN Entertainment
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

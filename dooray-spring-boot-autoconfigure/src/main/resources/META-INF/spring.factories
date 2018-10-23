@@ -1,0 +1,2 @@
+# TODO (5)
+# @EnableAutoConfiguration 이 선언되었을 때 com.nhnent.edu.springboot.starter.DoorayAutoConfiguration 을 사용하도록 설정.

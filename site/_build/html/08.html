@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="ko" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="ko" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>8. Pagination 구현 수정 &mdash; Spring Boot Custom Starter 개발 실습 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="9. 불필요한 mybatis 관련 파일 삭제" href="09.html" />
+    <link rel="prev" title="7. 어플리케이션에서의 사용" href="07.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Spring Boot Custom Starter 개발 실습
+          
+
+          
+          </a>
+
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01.html">1. 개요</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.html">2. Dooray! 메신저 Hook Url 얻기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.html">3. 실습용 Project 다운로드</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.html">4. Project의 구조</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.html">5. 연관관계 설정</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06.html">6. Repository 생성</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07.html">7. 어플리케이션에서의 사용</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Pagination 구현 수정</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#jpa-enablespringdatawebsupport">8.1. JPA 설정에 <cite>&#64;EnableSpringDataWebSupport</cite> 를 추가합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itemcontroller-pageable">8.2. ItemController에서 Pageable 객체를 파라미터로 받도록 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#itemservice-pageable">8.3. ItemService에서도 Pageable 파라미터를 받도룩 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ordercontroller-pageable">8.4. OrderController에서 Pageable 객체를 파라미터로 받도록 수정합니다</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orderservice-pageable">8.5. OrderService에서도 Pageable 파라미터를 받도룩 수정합니다</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09.html">9. 불필요한 mybatis 관련 파일 삭제</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wrap-up.html">10. 정리</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Spring Boot Custom Starter 개발 실습</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>8. Pagination 구현 수정</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pagination">
+<h1>8. Pagination 구현 수정<a class="headerlink" href="#pagination" title="제목 주소">¶</a></h1>
+<div class="section" id="jpa-enablespringdatawebsupport">
+<h2>8.1. JPA 설정에 <cite>&#64;EnableSpringDataWebSupport</cite> 를 추가합니다<a class="headerlink" href="#jpa-enablespringdatawebsupport" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>Spring Data JPA에서 제공해주는 <cite>Pageable</cite> 인터페이스를 사용하기 위해 JPA 설정에 <cite>&#64;EnableSpringDataWebSupport</cite> 어노테이션을 추가합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Pageable 인터페이스를 사용하기 위해 @EnableSpringDataWebSupport 추가</span>
+<span class="nd">@EnableSpringDataWebSupport</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JpaConfig</span> <span class="o">{</span>
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="itemcontroller-pageable">
+<h2>8.2. ItemController에서 Pageable 객체를 파라미터로 받도록 수정합니다<a class="headerlink" href="#itemcontroller-pageable" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>ItemController에서 pagination 처리를 위해 사용하던 <cite>page</cite> 파라미터 대신 Pageable 객체를 받도록 수정합니다</li>
+<li>전달받은 Pageable 객체를 그대로 <cite>itemService.getItems()</cite> 메쏘드로 전달합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemController</span> <span class="o">{</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">Page</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="nf">getItems</span><span class="o">(</span><span class="n">Pageable</span> <span class="n">pageable</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">itemService</span><span class="o">.</span><span class="na">getItems</span><span class="o">(</span><span class="n">pageable</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="itemservice-pageable">
+<h2>8.3. ItemService에서도 Pageable 파라미터를 받도룩 수정합니다<a class="headerlink" href="#itemservice-pageable" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>Pageable을 이용하면 Spring Data JPA에서 제공하는 페이징 구현을 사용하므로 <cite>itemMapper.getItemCount()</cite> 메쏘드를 직접 호출하거나 직접 페이징 기능을 구현할 필요가 없습니다</li>
+<li><cite>itemMapper.getItems()</cite> 메쏘드 호출 대신 <cite>itemRepository.findAll()</cite> 메쏘드를 사용하도록 수정합니다</li>
+<li>전달받은 Pageable 객체를 <cite>itemRepository.findAll()</cite> 메쏘드로 전달합니다</li>
+<li><cite>itemRepository.findAll()</cite> 메쏘드는 Page&lt;ItemEntity&gt; 객체를 반환하므로 <cite>getContent()</cite> 메쏘드를 호출해서 List 객체로 변환하고,
+List의 각 항목마다 <cite>toItemDto()</cite> 메쏘드를 호출하여 DTO로 변환해서 반환하도록 합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Item</span><span class="o">&gt;</span> <span class="nf">getItems</span><span class="o">(</span><span class="n">Pageable</span> <span class="n">pageable</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Page</span><span class="o">&lt;</span><span class="n">ItemEntity</span><span class="o">&gt;</span> <span class="n">itemPage</span> <span class="o">=</span> <span class="n">itemRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">(</span><span class="n">pageable</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">itemPage</span><span class="o">.</span><span class="na">getContent</span><span class="o">()</span>
+                       <span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+                       <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">ItemEntity</span><span class="o">::</span><span class="n">toItemDto</span><span class="o">)</span>
+                       <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ordercontroller-pageable">
+<h2>8.4. OrderController에서 Pageable 객체를 파라미터로 받도록 수정합니다<a class="headerlink" href="#ordercontroller-pageable" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>OrderController에서도 <cite>page</cite> 파라미터 대신 Pageable 객체를 받도록 수정합니다</li>
+<li>전달받은 Pageable 객체를 그대로 <cite>orderService.getOrders()</cite> 메쏘드로 전달합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderController</span> <span class="o">{</span>
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">Page</span><span class="o">&lt;</span><span class="n">Order</span><span class="o">&gt;</span> <span class="nf">getOrders</span><span class="o">(</span><span class="n">Pageable</span> <span class="n">pageable</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">orderService</span><span class="o">.</span><span class="na">getOrders</span><span class="o">(</span><span class="n">pageable</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="orderservice-pageable">
+<h2>8.5. OrderService에서도 Pageable 파라미터를 받도룩 수정합니다<a class="headerlink" href="#orderservice-pageable" title="제목 주소">¶</a></h2>
+<ul class="simple">
+<li>Pageable을 이용하므로 <cite>orderMapper.getOrderCount()</cite> 메쏘드를 직접 호출하거나 직접 페이징 기능을 구현할 필요가 없습니다</li>
+<li><cite>orderMapper.getOrders()</cite> 메쏘드 호출 대신 <cite>orderRepository.findAll()</cite> 메쏘드를 사용하도록 수정합니다</li>
+<li>전달받은 Pageable 객체를 <cite>orderRepository.findAll()</cite> 메쏘드로 전달합니다</li>
+<li><cite>orderRepository.findAll()</cite> 메쏘드는 Page&lt;OrderEntity&gt; 객체를 반환하므로 <cite>getContent()</cite> 메쏘드를 호출해서 List 객체로 변환하고,
+List의 각 항목마다 <cite>toOrderDto()</cite> 메쏘드를 호출하여 DTO로 변환해서 반환하도록 합니다</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Order</span><span class="o">&gt;</span> <span class="nf">getOrders</span><span class="o">(</span><span class="n">Pageable</span> <span class="n">pageable</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Page</span><span class="o">&lt;</span><span class="n">OrderEntity</span><span class="o">&gt;</span> <span class="n">orderPage</span> <span class="o">=</span> <span class="n">orderRepository</span><span class="o">.</span><span class="na">findAll</span><span class="o">(</span><span class="n">pageable</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">orderPage</span><span class="o">.</span><span class="na">getContent</span><span class="o">()</span>
+                        <span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+                        <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">OrderEntity</span><span class="o">::</span><span class="n">toOrderDto</span><span class="o">)</span>
+                        <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="09.html" class="btn btn-neutral float-right" title="9. 불필요한 mybatis 관련 파일 삭제" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="07.html" class="btn btn-neutral" title="7. 어플리케이션에서의 사용" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright NHN Entertainment
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
