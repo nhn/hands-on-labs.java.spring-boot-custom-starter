@@ -17,5 +17,9 @@ IDE 임포트
 
 * Intellij
 
-* Eclipse
+    * Import Project > ${clone 한 디렉토리 선택} > maven > NEXT > NEXT > Finish
+
+* Eclipse (STS)
+    
+    * File > Import Projects from File System or Archive > ${clone 한 디렉토리 선택} > Finish
 
