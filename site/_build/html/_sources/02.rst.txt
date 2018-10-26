@@ -5,7 +5,7 @@ Dooray! 메신저 Hook Url 얻기
 Dooray! 메신저 Hook URL 생성 
 ===============================
 
-* 두레이 (nhnent.dooray.com) > 설정 > 서비스 연동 > 서비스 추가 > Incomming > 연동 채팅방 에서 연동하고 싶은 채팅방을 하나 선택합니다. 
+* 두레이 > 설정 > 서비스 연동 > 서비스 추가 > Incomming > 연동 채팅방 에서 연동하고 싶은 채팅방을 하나 선택합니다. 
 
 .. image:: _static/getting_hook_url.png
 

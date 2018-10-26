@@ -15,11 +15,12 @@
 IDE 임포트
 ===================================
 
-* Intellij
+* 사용하는 IDE 에 따라 아래의 순서로 Import를 합니다.
+    * IntelliJ
 
-    * Import Project > ${clone 한 디렉토리 선택} > maven > NEXT > NEXT > Finish
+        * Import Project > ${clone 한 디렉토리 선택} > maven > NEXT > NEXT > Finish
 
-* Eclipse (STS)
+    * Eclipse (STS)
     
-    * File > Import Projects from File System or Archive > ${clone 한 디렉토리 선택} > Finish
+        * File > Import Projects from File System or Archive > ${clone 한 디렉토리 선택} > Finish
 

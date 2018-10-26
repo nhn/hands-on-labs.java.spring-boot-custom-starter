@@ -34,7 +34,7 @@ dooray.hook-url 설정
     dooray.hook-url=https://xxxxx..... 
 
 
-애플리캐이션이 기동하면서 Hook 발송
+애플리케이션이 실행하면서 Hook 발송
 ==================================================================
 
 * /dooray-spring-boot-starter-application/src/main/java/com/nhnent/edu/springboot/starter/Application.java
