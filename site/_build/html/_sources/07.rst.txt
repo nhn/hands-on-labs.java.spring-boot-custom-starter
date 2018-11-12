@@ -15,7 +15,7 @@ dooray-spring-boot-starter 의존성 추가
 
      <dependencies>
         <dependency>
-            <groupId>com.nhnent.springboot</groupId>
+            <groupId>com.nhnent.edu.springboot.starter</groupId>
             <artifactId>dooray-spring-boot-starter</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
