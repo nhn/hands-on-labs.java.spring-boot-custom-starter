@@ -17,4 +17,4 @@
 소스 코드
 ==========
 
-* https://github.nhnent.com/jibum-jung/hands-on-labs.java.spring-boot-custom-starter.git
+* https://github.com/nhnent/hands-on-labs.java.spring-boot-custom-starter.git
