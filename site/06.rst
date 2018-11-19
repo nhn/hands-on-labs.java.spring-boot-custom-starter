@@ -28,7 +28,7 @@ dooray-spring-boot-autoconfigure 를 의존성에 추가합니다.
         <dependencies>
             <!-- TODO (6) dooray-spring-boot-autoconfigure:1.0.1-SNAPSHOT dependency 를 추가한다. -->
             <dependency>
-                <groupId>com.nhnent.edu.springboot</groupId>
+                <groupId>com.nhnent.edu.springboot.starter</groupId>
                 <artifactId>dooray-spring-boot-autoconfigure</artifactId>
                 <version>1.0.1-SNAPSHOT</version>
             </dependency>
