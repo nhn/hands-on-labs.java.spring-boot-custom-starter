@@ -57,7 +57,7 @@ source_encoding = 'utf-8'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Spring Boot Custom Starter 개발 실습'
+project = 'Spring Boot Custom Starter'
 copyright = 'NHN Corp. All rights reserved.'
 author = ''
 
