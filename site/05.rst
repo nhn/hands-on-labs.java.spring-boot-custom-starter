@@ -93,6 +93,6 @@ hookUrl 프로퍼티를 선언하면 스프링부트의 Relaxed Binding 기능�
 .. code-block:: java
 
     org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-        com.nhnent.edu.springboot.starter.DoorayAutoConfiguration
+        DoorayAutoConfiguration
 
 

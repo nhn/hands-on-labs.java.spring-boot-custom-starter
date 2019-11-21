@@ -1,5 +1,8 @@
-package com.nhnent.edu.springboot.starter;
+package com.nhn.edu.springboot.starter.application;
 
+import com.nhn.dooray.client.DoorayHook;
+import com.nhn.dooray.client.DoorayHookSender;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -13,6 +16,8 @@ public class Application {
      * TODO (9)
      * DoorayHookSender 를 Autowire 한다.
      */
+    @Autowired
+    private DoorayHookSender doorayHookSender;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
@@ -26,6 +31,10 @@ public class Application {
     @Bean
     public ApplicationListener<ApplicationReadyEvent> applicationListener() {
         return (event) -> {
+            doorayHookSender.send(DoorayHook.builder()
+                    .botName("name")
+                    .text("hello")
+                    .build());
         };
     }
 }
