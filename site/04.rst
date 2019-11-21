@@ -16,11 +16,11 @@ dooray-spring-boot-starter
 dooray-spring-boot-autoconfiguration
 =================================================
 
-* 애플리케이션의 설정, 상태를 고려해서 자동으로 dooray-hook-client 빈을 생성하는 프로젝트입니다.
-* 조건이 맞지 않으면 dooray-hook-client을 생성하지 않도록 개발해야 합니다.
+* 애플리케이션의 설정, 상태를 고려해서 자동으로 dooray-hook-sender 빈을 생성하는 프로젝트입니다.
+* 조건이 맞지 않으면 dooray-hook-sender 를 생성하지 않도록 개발해야 합니다.
 
 dooray-spring-boot-starter-application
 =================================================
 
 * spring boot custom starter 를 사용하는 애플리케이션입니다. 
-* dooray-spring-boot-starter 의존성과 application.propreties 설정으로 dooray에 hook을 발송합니다.
+* dooray-spring-boot-starter 의존성과 application.properties 설정으로 dooray에 hook을 발송합니다.

@@ -1,8 +1,17 @@
 **********************
-정리
+dooray-spring-boot-starter-application 의 실행
 **********************
 
-학습한 내용
-=================
+애플리케이션이 실행하면서 Hook 발송
+==================================================================
 
-* java 라이브러리를 스프링부트 스타터로 만들고 활용하는 방법에 대해 이해 했습니다.
+* /dooray-spring-boot-starter-application/src/main/java/com/nhn/edu/springboot/starter/Application.java 을 실행합니다.
+
+
+메시지 수신
+==================================================================
+
+* 코드에서 DoorayHook 으로 작성한 내용이 Dooray! 메신저에 표시됩니다.
+
+.. image:: ./images/result.png
+

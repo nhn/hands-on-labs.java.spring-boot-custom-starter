@@ -2,7 +2,7 @@
 dooray-spring-boot-starter-application 에서의 사용 
 **********************
 
-* 애플리케이션에서는 `dooray-spring-boot-starter` 를 의존성에 추가하고 dooray.hook-url 속성만 제공하면 DoorayHookSender 빈이 자동으로 설정되어 진다.
+* 애플리케이션에서는 `dooray-spring-boot-starter` 를 의존성에 추가하고 dooray.hook-url 속성만 제공하면 DoorayHookSender 빈이 자동으로 설정됩니다.
 
 
 dooray-spring-boot-starter 의존성 추가
@@ -15,7 +15,7 @@ dooray-spring-boot-starter 의존성 추가
 
      <dependencies>
         <dependency>
-            <groupId>com.nhnent.edu.springboot.starter</groupId>
+            <groupId>com.nhn.edu.springboot.starter</groupId>
             <artifactId>dooray-spring-boot-starter</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
@@ -29,15 +29,15 @@ dooray.hook-url 설정
 * dooray.hook-url 속성으로  2장에서 복사해둔 url 을 설정합니다.
 * /dooray-spring-boot-starter-application/src/main/resources/application.properties
 
-.. code-block:: property
+.. code-block:: java
 
-    dooray.hook-url=https://xxxxx..... 
+    dooray.hook-url=https://hook.dooray.com/services/2617274018201142259/2617279287265373870/kN2S16uWT4aw7-bM5Gylmg
 
 
 애플리케이션이 실행하면서 Hook 발송
 ==================================================================
 
-* /dooray-spring-boot-starter-application/src/main/java/com/nhnent/edu/springboot/starter/Application.java
+* /dooray-spring-boot-starter-application/src/main/java/com/nhn/edu/springboot/starter/Application.java
 
 .. code-block:: java
 
@@ -65,8 +65,8 @@ dooray.hook-url 설정
         public ApplicationListener<ApplicationReadyEvent> applicationListener() {
             return (event) -> {
                 DoorayHook doorayHook = new DoorayHook();
-                doorayHook.setBotName("봇 이름");
-                doorayHook.setText("내용");
+                doorayHook.setBotName("name");
+                doorayHook.setText("hello");
                 doorayHookSender.send(doorayHook);
             };
         }

@@ -9,3 +9,7 @@ Dooray! 메신저 Hook URL 생성
 
 * URL 버튼을 클릭하여 연동 URL 을 클립보드로 복사합니다. 
 * 연동 URL은 실습 마지막에 사용해야 합니다. 메모장에 저장해 둡니다.
+* 이번 핸즈온랩에서는 미리 생성한 URL 을 사용합니다. 예제 소스에 포함되어 있습니다.
+.. code-block:: bash
+
+    https://hook.dooray.com/services/2617274018201142259/2617279287265373870/kN2S16uWT4aw7-bM5Gylmg

@@ -9,7 +9,7 @@
 
 .. code-block:: bash
 
-    git clone https://github.com/nhnent/hands-on-labs.java.spring-boot-custom-starter.git 
+    git clone https://github.com/nhn/hands-on-labs.java.spring-boot-custom-starter.git
 
 
 IDE 임포트
