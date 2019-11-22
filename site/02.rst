@@ -15,4 +15,5 @@ Dooray! 메신저 Hook URL 생성
 
     https://hook.dooray.com/services/2617274018201142259/2617279287265373870/kN2S16uWT4aw7-bM5Gylmg
 
-* Dooray!메신저를 실행하고 테넌트는 nhntechedu 로 설정하고 student/gkrtod1! 로 로그인 합니다. (실습 PC 에는 이미 로그인 되어 있을 수 있습니다.)
+* Dooray!메신저를 실행하고 테넌트는 nhntechedu 로 설정하고 아래 정보로 로그인 합니다. (실습 PC 에는 이미 로그인 되어 있을 수 있습니다.)
+    * 로그인 ID/PW : student/gkrtod1!
