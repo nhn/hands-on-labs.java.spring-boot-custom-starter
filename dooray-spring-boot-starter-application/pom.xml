@@ -31,11 +31,8 @@
         </dependency>
 
         <!-- TODO (7) dooray-spring-boot-starter:2.2.1.RELEASE dependency 를 추가한다. -->
-        <dependency>
-            <groupId>com.nhn.edu.springboot.starter</groupId>
-            <artifactId>dooray-spring-boot-starter</artifactId>
-            <version>2.2.1.RELEASE</version>
-        </dependency>
+
+
     </dependencies>
 
 

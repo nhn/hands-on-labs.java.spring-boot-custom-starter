@@ -9,7 +9,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * hint: @ConfigurationProperties, prefix => dooray
  */
-@ConfigurationProperties(prefix = "dooray")
 public class DoorayProperties {
     private String hookUrl;
 

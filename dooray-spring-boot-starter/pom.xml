@@ -17,11 +17,11 @@
     <dependencies>
         <!-- TODO (6) dooray-spring-boot-autoconfigure:2.2.1.RELEASE dependency 를 추가해 주세요. -->
         <!-- TODO (6) dooray-spring-boot-autoconfigure：2.2.1.RELEASE dependencyを追加してください。 -->
-        <dependency>
-            <groupId>com.nhn.edu.springboot.starter</groupId>
-            <artifactId>dooray-spring-boot-autoconfigure</artifactId>
-            <version>2.2.1.RELEASE</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.nhn.edu.springboot.starter</groupId>-->
+<!--            <artifactId>dooray-spring-boot-autoconfigure</artifactId>-->
+<!--            <version>2.2.1.RELEASE</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
