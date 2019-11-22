@@ -17,7 +17,7 @@ dooray-spring-boot-starter 의존성 추가
         <dependency>
             <groupId>com.nhn.edu.springboot.starter</groupId>
             <artifactId>dooray-spring-boot-starter</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>2.2.1.RELEASE</version>
         </dependency>
     </dependencies>
 
@@ -38,6 +38,7 @@ dooray.hook-url 설정
 ==================================================================
 
 * /dooray-spring-boot-starter-application/src/main/java/com/nhn/edu/springboot/starter/Application.java
+* botName, text 메소드를 사용할때, 본인의 별명과 공유하고 싶은 메시지를 사용해 주세요.
 
 .. code-block:: java
 
@@ -45,10 +46,9 @@ dooray.hook-url 설정
     public class Application {
 
         /**
-        * TODO (9)
-        * DoorayHookSender 를 Autowire 한다.
-        */
-
+         * TODO (9)
+         * DoorayHookSender 를 Autowire 한다.
+         */
         @Autowired
         private DoorayHookSender doorayHookSender;
 
@@ -58,16 +58,16 @@ dooray.hook-url 설정
 
 
         /**
-        * TODO (10)
-        * ApplicationReady 일때!, DoorayHookSender 로 Hook 을 발송한다.
-        */
+         * TODO (10)
+         * ApplicationReady 일때!, DoorayHookSender 로 Hook 을 발송한다.
+         */
         @Bean
         public ApplicationListener<ApplicationReadyEvent> applicationListener() {
             return (event) -> {
-                DoorayHook doorayHook = new DoorayHook();
-                doorayHook.setBotName("name");
-                doorayHook.setText("hello");
-                doorayHookSender.send(doorayHook);
+                doorayHookSender.send(DoorayHook.builder()
+                        .botName("별명")
+                        .text("안녕하세요!!")
+                        .build());
             };
         }
     }

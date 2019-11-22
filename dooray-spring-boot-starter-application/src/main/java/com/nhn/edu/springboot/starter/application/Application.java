@@ -32,8 +32,8 @@ public class Application {
     public ApplicationListener<ApplicationReadyEvent> applicationListener() {
         return (event) -> {
             doorayHookSender.send(DoorayHook.builder()
-                    .botName("name")
-                    .text("hello")
+                    .botName("별명")
+                    .text("안녕하세요!!")
                     .build());
         };
     }
