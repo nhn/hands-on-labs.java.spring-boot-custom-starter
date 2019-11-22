@@ -1,12 +1,12 @@
-************
+************************************************
 dooray-spring-boot-autoconfigure 개발
-************
+************************************************
 
 dooray.hook-url 속성을 사용할 수 있도록 프로퍼티 클래스를 개발합니다.
-=========================================================
+=====================================================================================
 
-hookUrl 프로퍼티를 선언하면 스프링부트의 Relaxed Binding 기능으로 dooray.hook-url 속성을
-사용할 수 있습니다.
+* hookUrl 프로퍼티를 선언하면 스프링부트의 Relaxed Binding 기능으로 dooray.hook-url 속성을 사용할 수 있습니다.
+* **@ConfigurationProperties** 애너테이션을 사용하는 것이 핵심입니다.
 * /src/main/java/com/nhn/edu/springboot/starter/DoorayProperties.java
 
 .. code-block:: java
@@ -25,11 +25,12 @@ hookUrl 프로퍼티를 선언하면 스프링부트의 Relaxed Binding 기능�
     }
 
 
-DoorayHookSender.class 가 Classpath에 존재할 때 , DoorayAutoConfiguration 가 동작하도록 설정합니다.
-=============================================================
+DoorayHookSender.class 가 Classpath에 존재할 때, DoorayAutoConfiguration 가 동작하도록 설정합니다.
+=======================================================================================================
 
-* `@ConditionalOnClass` : 지정한 클래스가 존재하면 java config가 동작합니다.
+* **@ConditionalOnClass** : 지정한 클래스가 존재하면 java config가 동작합니다.
 * /src/main/java/com/nhn/edu/springboot/starter/DoorayAutoConfiguration.java
+
 .. code-block:: java
 
     @Configuration
@@ -41,9 +42,11 @@ DoorayHookSender.class 가 Classpath에 존재할 때 , DoorayAutoConfiguration 
 
 
 dooray.hook-url 속성이 정의되어 있을 때 , DoorayAutoConfiguration 가 동작하도록 설정합니다.
-=============================================================
-* `@ConditionalOnProperty` : 지정한 속성이 정의되어 있으면 java config가 동작합니다.
+========================================================================================================
+* **@ConditionalOnProperty** : 지정한 속성이 정의되어 있으면 java config가 동작합니다.
 * /src/main/java/com/nhn/edu/springboot/starter/DoorayAutoConfiguration.java
+
+
 .. code-block:: java
 
     @Configuration
@@ -55,9 +58,9 @@ dooray.hook-url 속성이 정의되어 있을 때 , DoorayAutoConfiguration 가 
 
 
 애플리케이션의 다른 설정에서 RestTemplate 타입의 빈이 설정되지 않았을 때, restTemplate 빈을 생성하도록 합니다.
-=============================================================
+===================================================================================================================
 
-* `@ConditionalOnMissingBean` : 특정 타입의 빈이 선언되지 않았으면 java config가 동작합니다.
+* **@ConditionalOnMissingBean** : 특정 타입의 빈이 선언되지 않았으면 java config가 동작합니다.
 * /src/main/java/com/nhn/edu/springboot/starter/DoorayAutoConfiguration.java
 
 .. code-block:: java
@@ -70,10 +73,9 @@ dooray.hook-url 속성이 정의되어 있을 때 , DoorayAutoConfiguration 가 
 
 
 DoorayHookSender 빈을 선언합니다.
-=========================================================
+=========================================================================================================
 
-`DoorayHookSender`의 DoorayHookSender(RestTemplate resttemplate, String url) 생성자를 이용하여
-빈을 선언합니다.
+* **DoorayHookSender** 의 DoorayHookSender(RestTemplate resttemplate, String url) 생성자를 이용하여 빈을 선언합니다.
 * /src/main/java/com/nhn/edu/springboot/starter/DoorayAutoConfiguration.java
 
 .. code-block:: java
@@ -85,7 +87,7 @@ DoorayHookSender 빈을 선언합니다.
 
 
 스프링부트 애플리케이션이 로딩할 JavaConfiguration 을 지정해 줍니다.
-=========================================================
+=========================================================================================================
 
 * /src/main/resources/META-INF/spring.factories 
 

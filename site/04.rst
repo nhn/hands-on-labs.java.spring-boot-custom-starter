@@ -1,11 +1,11 @@
-************
+****************
 Project의 구조
-************
+****************
 
 * 실습용 프로젝트는 3개의 프로젝트로 구성됩니다. 
-    * dooray-spring-boot-starter : 스타터의 의존성관리
-    * dooray-spring-boot-autoconfiguration : auto configuration 제공
-    * dooray-spring-boot-starter-application : 작성한 스타터를 사용하는 애플리케이션
+    * dooray-spring-boot-starter : 스프링 부트 스타터
+    * dooray-spring-boot-autoconfiguration : auto configuration
+    * dooray-spring-boot-starter-application : 개발한 스프링 부트 스타터를 사용하는 애플리케이션
 
 dooray-spring-boot-starter
 =================================================

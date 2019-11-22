@@ -1,6 +1,6 @@
-****
+************
 개요
-****
+************
 
 학습할 내용
 ============
@@ -13,8 +13,8 @@
 * JDK 8 이상
 * Maven 3
 * IDE (IntelliJ 또는 Eclipse)
+* Dooray! 메신저 (실습 PC 에는 이미 설치되어 있습니다.) `다운로드 <https://dooray.com/home/download/>`_
 
-소스 코드
 ==========
 
 * https://github.com/nhn/hands-on-labs.java.spring-boot-custom-starter.git
