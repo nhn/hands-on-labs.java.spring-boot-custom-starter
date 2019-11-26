@@ -5,7 +5,7 @@ Spring Boot Custom Starter 개발 실습
 * 카테고리: API
 * 레벨: 초급
 * 시간: 15분
-* 업데이트: 2018.10.15
+* 업데이트: 2019.11.25
 
 .. toctree::
    :maxdepth: 1
