@@ -35,6 +35,7 @@ public class DoorayAutoConfiguration {
      * TODO (3) RestTemplate typeのウィーンが宣言されていないとRestTemplate Beanを生成するように @ConditionalOnMissingBeanを利用してコードを作成してください。
      */
     @Bean
+    //@ConditionalOnMissingBean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
@@ -45,7 +46,7 @@ public class DoorayAutoConfiguration {
      */
     @Bean
     public DoorayHookSender doorayHookSender(RestTemplate restTemplate, DoorayProperties doorayProperties) {
-        return new DoorayHookSender(null, null);
+        return new DoorayHookSender(restTemplate, null);
     }
 
 

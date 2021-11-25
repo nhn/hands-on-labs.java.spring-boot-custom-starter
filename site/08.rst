@@ -2,6 +2,11 @@
 dooray-spring-boot-starter-application 의 실행
 ***********************************************
 
+두레이 메신저 로그인
+==================================================================
+* https://nhnforward.dooray.com/messenger 에 접속합니다.
+* ID/PASSWORD 는 member1/member1! 입니다.
+
 애플리케이션이 실행하면서 Hook 발송
 ==================================================================
 
@@ -10,8 +15,6 @@ dooray-spring-boot-starter-application 의 실행
 
 메시지 수신
 ==================================================================
-
 * 코드에서 DoorayHook 으로 작성한 내용이 Dooray! 메신저에 표시됩니다.
-
 .. image:: ./images/result.png
 
