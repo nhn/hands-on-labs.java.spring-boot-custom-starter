@@ -6,7 +6,7 @@
 
     <groupId>com.nhn.edu.springboot.starter.application</groupId>
     <artifactId>dooray-spring-boot-starter-application</artifactId>
-    <version>2.2.1.RELEASE</version>
+    <version>2.6.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -16,7 +16,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.1.RELEASE</version>
+        <version>2.6.0</version>
     </parent>
 
     <dependencies>
@@ -30,7 +30,12 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <!-- TODO (7) dooray-spring-boot-starter:2.2.1.RELEASE dependency 를 추가한다. -->
+        <!-- TODO (7) dooray-spring-boot-starter:2.6.0 dependency 를 추가한다. -->
+<!--        <dependency>-->
+<!--            <groupId>com.nhn.edu.springboot.starter</groupId>-->
+<!--            <artifactId>dooray-spring-boot-starter</artifactId>-->
+<!--            <version>2.6.0</version>-->
+<!--        </dependency>-->
 
 
     </dependencies>
