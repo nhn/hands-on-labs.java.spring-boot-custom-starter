@@ -17,7 +17,7 @@ dooray-spring-boot-starter 의존성 추가
         <dependency>
             <groupId>com.nhn.edu.springboot.starter</groupId>
             <artifactId>dooray-spring-boot-starter</artifactId>
-            <version>2.2.1.RELEASE</version>
+            <version>2.6.0</version>
         </dependency>
     </dependencies>
 
@@ -31,7 +31,7 @@ dooray.hook-url 설정
 
 .. code-block:: java
 
-    dooray.hook-url=https://hook.dooray.com/services/2617274018201142259/2617279287265373870/kN2S16uWT4aw7-bM5Gylmg
+    dooray.hook-url=https://hook.dooray.com/services/3150382141546198980/3150385345851315773/ZsAciavlQk6NEnkaTu6i3w
 
 
 애플리케이션이 실행하면서 Hook 발송

@@ -13,7 +13,7 @@
 * JDK 8 이상
 * Maven 3
 * IDE (IntelliJ 또는 Eclipse)
-* Dooray! 메신저 (실습 PC 에는 이미 설치되어 있습니다.) `다운로드 <https://dooray.com/home/download/>`_
+
 
 ==========
 
